@@ -21,6 +21,7 @@ The goal of this project is to provide minimalistic django blogging app template
 5) Post Timestamp
 6) Post snippet(Part of the Post content to be shown on the main page)
 7) Post Author
+8) Number of likes on the post
 
 * A user can sign up using a new user name and password and also edit the profile credentials (username, first name, last name, email address, password) later on.
 
