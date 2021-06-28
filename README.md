@@ -1,7 +1,3 @@
-# django-blog
-
-{% if False %}
-
 # Introduction
 
 The goal of this project is to provide minimalistic django blogging app template with all the basic features so that everyone can use, which _just works_ out of the box. 
@@ -13,7 +9,7 @@ The goal of this project is to provide minimalistic django blogging app template
 2) Last Name
 3) Email
 4) Password
-5) No. of Logins
+5) Number of Logins by the user.(Login Count)
 6) Last login date and time
 7) Account creation date and time
 
