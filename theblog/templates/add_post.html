@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create a New Blog Post
+{% endblock %}
+
+{% block content %}
+
+<!-- The user can add new post only if he has logged into the application -->
+{% if user.is_authenticated %}
+	<h1>Add Post</h1>
+	<br/><br/>
+	<div class="form-group">
+		<form method="POST">
+			{% csrf_token %}
+			{{ form.media }}
+			{{ form.as_p }}
+			<button class="btn btn-secondary">Post</button>
+		</form>
+	</div>
+	<!-- I have added a script to get rid of the option of changing the author of the post even if the user isn't the original author of the post -->
+	<script>
+		var name="{{ user.id }}";
+		document.getElementById("user").value=name;
+	</script>
+
+{% else %}
+Please login to add post
+{%endif%}
+
+{% endblock %}

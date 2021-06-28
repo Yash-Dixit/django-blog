@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Blog Post
+{% endblock %}
+
+{% block content %}
+
+<!-- The user can edit the post only if the user owns the post and is logged into the app -->
+{% if user.is_authenticated %}
+	{% if user.id == post.author.id %}
+		<h1>Update Post</h1>
+		<br/><br/>
+		<div class="form-group">
+			<form method="POST">
+				{% csrf_token %}
+				{{ form.media }}
+				{{ form.as_p }}
+				<button class="btn btn-secondary">Update</button>
+			</form>
+		</div>
+	{% else %}
+		You don't have access to edit this post
+	{% endif %}
+
+{% else %}
+Please login to edit post
+{%endif%}
+
+{% endblock %}

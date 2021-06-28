@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ post.title_tag }}
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ post.title }}</h1>
+
+<small>By: {{ post.author.first_name }} {{ post.author.last_name }} - <small>{{ post.post_date_time }}</small>
+
+<!-- The edit and delete options are available only for those post which are owned by the author --> 
+{% if user.is_authenticated %}
+	{% if user.id == post.author.id %}
+		- <a href="{% url 'edit_post' post.pk %}"><small>(Edit)</small></a> - <a href="{% url 'delete_post' post.pk %}"><small>(Delete)</small></a></small><br/>
+	{%endif%}
+{%endif%}
+
+<hr>
+<br/>
+{{ post.body|safe }}
+
+<br/><br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+<br/><br/>
+<hr>
+<br/>
+<form action="{% url 'like_post' post.pk %}" method="POST">
+	{% csrf_token %}
+	<!-- The user can like or unlike the post only if the user is logged into the app -->
+	{% if user.is_authenticated %}
+		{% if liked %}
+			<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-danger btn-sm">Unlike</button>
+		{% else %}
+			<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-primary btn-sm">Like</button>
+		{% endif %}
+	{% else %}
+		<a href="{% url 'login' %}" class="btn btn-primary">Login to Like</a>
+	{% endif %}
+	 - {{ total_likes }} Likes
+{% endblock %}

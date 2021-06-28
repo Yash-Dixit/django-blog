@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if category_posts %}
+
+	<h1>{{ cats }} Category</h1>
+
+	<ul>
+	{% for post in category_posts %}
+		<li><a href="{% url 'article-detail' post.pk %}">{{ post.title }}</a>
+			 - <small>{{ post.author.first_name }} {{ post.author.last_name }}</small> - <small>{{ post.post_date_time }}</small>  
+			 <!-- The user can add a custom category like a hashtag only if the user is logged in -->
+			{% if user.is_authenticated %}
+				{% if user.id == post.author.id %}
+					- <a href="{% url 'edit_post' post.pk %}"><small>(Edit)</small></a> 
+					- <a href="{% url 'delete_post' post.pk %}"><small>(Delete)</small></a>
+				{% endif %}
+			{% endif %}
+		<br/>
+		{{ post.body|slice:":200"|safe }}</li>
+	{% endfor%}
+	</ul>
+
+{% else %}
+	<h2>Sorry this page does not exist .... </h2>
+{% endif %}
+
+{% endblock %}

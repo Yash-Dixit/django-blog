@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Post</h1>
+
+<ul>
+<!-- Show all the posts to the user doesn't matter if the user is logged in or not -->
+{% for post in object_list %}
+	<li><a href="{% url 'article-detail' post.pk %}">{{ post.title }}</a>
+		 - <small><a href = "{% url 'category' post.category_title|slugify %}">{{ post.category_title }}</a></small>
+		 - <small>{{ post.author.first_name }} {{ post.author.last_name }}</small> - <small>{{ post.post_date_time }}</small>  
+
+		<!-- The edit and delete options are shown only if the posts are owned by the user -->
+		{% if user.is_authenticated %}
+			{% if user.id == post.author.id %}
+			- <a href="{% url 'edit_post' post.pk %}"><small>(Edit)</small></a> - <a href="{% url 'delete_post' post.pk %}"><small>(Delete)</small></a>
+			{% endif %}
+		{% endif %}
+	<br/>
+{{ post.snippet }}</li>
+{% endfor%}
+</ul>
+
+{% endblock %}
